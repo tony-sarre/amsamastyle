@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Amsama Style — Couture Africaine à Winnipeg. Créations sur mesure, prêt-à-porter, tissus wax. African Fashion in Winnipeg, Canada.">
+<title>Amsama Style — Couture Africaine | African Fashion — Winnipeg</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+<div class="wax-bg"></div>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/{{ site.whatsapp }}?text=Bonjour%20Amsama%20Style%20!" class="wa-float" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+
+<!-- Nav -->
+<nav class="nav" id="nav">
+  <a href="#" class="nav-logo">AMSAMA <i>Style</i></a>
+  <div class="nav-right">
+    <div class="nav-links" id="navLinks">
+      <a href="#about"><span class="lang-fr">À propos</span><span class="lang-en">About</span></a>
+      <a href="#services">Services</a><a href="#collection">Collection</a>
+      <a href="#tendances"><span class="lang-fr">Tendances</span><span class="lang-en">Trends</span></a>
+      <a href="#commander"><span class="lang-fr">Commander</span><span class="lang-en">Order</span></a>
+      <a href="#avis"><span class="lang-fr">Avis</span><span class="lang-en">Reviews</span></a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="lang-toggle"><button class="lang-btn active" id="btnFR">FR</button><button class="lang-btn" id="btnEN">EN</button></div>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+{{ content | safe }}
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div><div class="footer-logo">AMSAMA Style</div><p class="footer-desc lang-fr">Couture africaine d'exception à Winnipeg. Créations sur mesure, prêt-à-porter et tissus wax authentiques.</p><p class="footer-desc lang-en">Exceptional African fashion in Winnipeg. Custom tailoring, ready-to-wear and authentic wax fabrics.</p></div>
+    <div><h4>Navigation</h4><ul><li><a href="#about"><span class="lang-fr">À propos</span><span class="lang-en">About</span></a></li><li><a href="#services">Services</a></li><li><a href="#collection">Collection</a></li></ul></div>
+    <div><h4>Services</h4><ul><li><a href="#services"><span class="lang-fr">Couture sur mesure</span><span class="lang-en">Custom tailoring</span></a></li><li><a href="#services"><span class="lang-fr">Tissus</span><span class="lang-en">Fabrics</span></a></li><li><a href="#services"><span class="lang-fr">Mariage</span><span class="lang-en">Wedding</span></a></li></ul></div>
+    <div><h4>Contact</h4><ul><li><a href="tel:{{ site.phone }}">{{ site.phone }}</a></li><li><a href="https://wa.me/{{ site.whatsapp }}" target="_blank">WhatsApp</a></li><li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li><li>{{ site.address }}, Winnipeg</li></ul></div>
+  </div>
+  <div class="footer-bottom"><span>&copy; 2026 Amsama Style.</span><span>{{ site.address }}, {{ site.city }}</span></div>
+</footer>
+
+<div class="notification" id="notification"></div>
+
+<script>
+(function(){
+  // Language toggle
+  var btnFR=document.getElementById('btnFR'),btnEN=document.getElementById('btnEN');
+  btnFR.addEventListener('click',function(){document.body.classList.remove('en');btnFR.classList.add('active');btnEN.classList.remove('active')});
+  btnEN.addEventListener('click',function(){document.body.classList.add('en');btnEN.classList.add('active');btnFR.classList.remove('active')});
+
+  // Mobile menu
+  document.getElementById('hamburger').addEventListener('click',function(){document.getElementById('navLinks').classList.toggle('open')});
+  document.querySelectorAll('.nav-links a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('navLinks').classList.remove('open')})});
+
+  // Scroll nav
+  window.addEventListener('scroll',function(){document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50)});
+
+  // Product filter
+  document.querySelectorAll('.filter-btn').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('.filter-btn').forEach(function(x){x.classList.remove('active')});
+      this.classList.add('active');
+      var f=this.dataset.f;
+      document.querySelectorAll('.product-card').forEach(function(c){
+        c.style.display=(f==='all'||c.dataset.cat===f)?'':'none';
+      });
+    });
+  });
+
+  // Scroll animations
+  var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)'}})},{threshold:0.1});
+  document.querySelectorAll('.service-card,.product-card,.trend-card,.review-card,.step').forEach(function(el){
+    el.style.opacity='0';el.style.transform='translateY(30px)';el.style.transition='opacity .6s,transform .6s';obs.observe(el);
+  });
+
+  // Netlify Identity redirect after login
+  if(window.netlifyIdentity){
+    window.netlifyIdentity.on('init',function(user){if(!user){window.netlifyIdentity.on('login',function(){document.location.href='/admin/'})}});
+  }
+})();
+</script>
+</body>
+</html>

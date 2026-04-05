@@ -1,0 +1,8 @@
+[
+  {"icon": "✂️", "title_fr": "Couture Sur Mesure", "title_en": "Custom Tailoring", "desc_fr": "Créations personnalisées. Robes, boubous, ensembles — chaque pièce unique.", "desc_en": "Personalized creations. Dresses, boubous, outfits — each piece unique.", "price": "À partir de 150 $CAD"},
+  {"icon": "👗", "title_fr": "Prêt-à-Porter", "title_en": "Ready-to-Wear", "desc_fr": "Tenues africaines modernes prêtes à porter. Robes, jupes, chemises.", "desc_en": "Modern African outfits. Dresses, skirts, shirts.", "price": "De 75 à 400 $CAD"},
+  {"icon": "🧵", "title_fr": "Vente de Tissus", "title_en": "Fabric Sales", "desc_fr": "Wax hollandais, bazin riche, brodé, kente, bogolan. Importés d'Afrique.", "desc_en": "Dutch wax, bazin riche, kente, bogolan. Imported from Africa.", "price": "À partir de 15 $CAD/yard"},
+  {"icon": "👰", "title_fr": "Tenues de Mariage", "title_en": "Wedding Outfits", "desc_fr": "Robes de mariée africaines, tenues de cérémonie, cortèges.", "desc_en": "African wedding dresses, ceremony and bridal party outfits.", "price": "Sur devis"},
+  {"icon": "📐", "title_fr": "Retouches", "title_en": "Alterations", "desc_fr": "Ajustements, ourlets, modifications pour un rendu parfait.", "desc_en": "Adjustments, hems, size mods for a perfect fit.", "price": "À partir de 25 $CAD"},
+  {"icon": "🎨", "title_fr": "Conseil en Style", "title_en": "Style Consulting", "desc_fr": "Conseils tissus, modèles tendances et couleurs.", "desc_en": "Advice on fabrics, trends and color combinations.", "price": "Gratuit"}
+]
