@@ -1,0 +1,176 @@
+---
+layout: layout.njk
+---
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg-image"></div><div class="hero-overlay"></div><div class="hero-pattern"></div>
+  <div class="hero-content">
+    <div class="lang-fr"><div class="hero-tag">Couture Africaine — Winnipeg, Canada</div><h1>L'Élégance<br>Africaine <em>Sublimée</em></h1><p>Créations sur mesure, tenues prêt-à-porter et tissus wax d'exception. Aminata Sarre habille votre histoire avec le savoir-faire sénégalais.</p></div>
+    <div class="lang-en"><div class="hero-tag">African Fashion — Winnipeg, Canada</div><h1>African<br>Elegance <em>Elevated</em></h1><p>Custom creations, ready-to-wear outfits and premium African fabrics. Aminata Sarre dresses your story with Senegalese craftsmanship.</p></div>
+    <div class="hero-btns">
+      <a href="#collection" class="btn-primary"><span class="lang-fr">Découvrir la Collection</span><span class="lang-en">Explore Collection</span></a>
+      <a href="https://wa.me/{{ site.whatsapp }}?text=Bonjour%20Amsama%20Style%20!" class="btn-whatsapp" target="_blank"><span class="lang-fr">Commander via WhatsApp</span><span class="lang-en">Order via WhatsApp</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-image"><img src="/images/boubou_royal_dakar.JPG" alt="Amsama Style" class="about-img-main"><div class="about-image-accent"></div></div>
+  <div>
+    <div class="lang-fr"><div class="section-tag">Notre Histoire</div><h2 class="section-title">Du Sénégal au Canada,<br>le <em>fil</em> de l'élégance</h2><p class="section-desc" style="margin-bottom:1.5rem">{{ site.about_fr }}</p><p class="section-desc">{{ site.about2_fr }}</p></div>
+    <div class="lang-en"><div class="section-tag">Our Story</div><h2 class="section-title">From Senegal to Canada,<br>the <em>thread</em> of elegance</h2><p class="section-desc" style="margin-bottom:1.5rem">{{ site.about_en }}</p><p class="section-desc">{{ site.about2_en }}</p></div>
+    <div class="about-stats">
+      <div><div class="stat-num">{{ site.stats_years }}</div><div class="stat-label"><span class="lang-fr">Années d'expérience</span><span class="lang-en">Years of experience</span></div></div>
+      <div><div class="stat-num">{{ site.stats_clients }}</div><div class="stat-label"><span class="lang-fr">Clientes satisfaites</span><span class="lang-en">Happy clients</span></div></div>
+      <div><div class="stat-num">{{ site.stats_handmade }}</div><div class="stat-label"><span class="lang-fr">Fait main</span><span class="lang-en">Handmade</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="lang-fr"><div class="section-tag">Nos Services</div><h2 class="section-title">Un savoir-faire <em>complet</em></h2></div>
+  <div class="lang-en"><div class="section-tag">Our Services</div><h2 class="section-title">Complete <em>craftsmanship</em></h2></div>
+  <div class="services-grid">
+    {% for s in services %}
+    <div class="service-card">
+      <div class="service-icon">{{ s.icon }}</div>
+      <h3><span class="lang-fr">{{ s.title_fr }}</span><span class="lang-en">{{ s.title_en }}</span></h3>
+      <p><span class="lang-fr">{{ s.desc_fr }}</span><span class="lang-en">{{ s.desc_en }}</span></p>
+      <div class="price">{{ s.price }}</div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- COLLECTION -->
+<section class="collection" id="collection">
+  <div class="lang-fr"><div class="section-tag">Notre Collection</div><h2 class="section-title">Explorez nos <em>créations</em></h2></div>
+  <div class="lang-en"><div class="section-tag">Our Collection</div><h2 class="section-title">Explore our <em>creations</em></h2></div>
+  <div class="collection-filter" id="filterBtns">
+    <button class="filter-btn active" data-f="all"><span class="lang-fr">Tout voir</span><span class="lang-en">View all</span></button>
+    <button class="filter-btn" data-f="robe"><span class="lang-fr">Robes</span><span class="lang-en">Dresses</span></button>
+    <button class="filter-btn" data-f="boubou">Boubous</button>
+    <button class="filter-btn" data-f="ensemble"><span class="lang-fr">Ensembles</span><span class="lang-en">Outfits</span></button>
+    <button class="filter-btn" data-f="tissu"><span class="lang-fr">Tissus</span><span class="lang-en">Fabrics</span></button>
+    <button class="filter-btn" data-f="accessoire"><span class="lang-fr">Accessoires</span><span class="lang-en">Accessories</span></button>
+  </div>
+  <div class="collection-grid" id="productsGrid">
+    {% for p in products %}
+    <div class="product-card" data-cat="{{ p.category }}">
+      <div class="product-img">
+        <img src="{{ p.image }}" alt="{{ p.name_fr }}" loading="lazy">
+        {% if p.badge_fr %}<div class="product-badge"><span class="lang-fr">{{ p.badge_fr }}</span><span class="lang-en">{{ p.badge_en }}</span></div>{% endif %}
+      </div>
+      <div class="product-info">
+        <div class="product-category">{{ p.category }}</div>
+        <div class="product-name"><span class="lang-fr">{{ p.name_fr }}</span><span class="lang-en">{{ p.name_en }}</span></div>
+        <div class="product-price">{{ p.price }} $CAD{{ p.unit }}{% if p.old_price %} <span class="old">{{ p.old_price }} $CAD</span>{% endif %}</div>
+        <div class="product-actions">
+          <a href="https://wa.me/{{ site.whatsapp }}?text=Bonjour%20!%20Je%20suis%20int%C3%A9ress%C3%A9(e)%20par%20{{ p.name_fr | urlencode }}%20({{ p.price }}%24CAD)" class="btn-add-cart" target="_blank"><span class="lang-fr">Commander</span><span class="lang-en">Order</span></a>
+          <a href="https://wa.me/{{ site.whatsapp }}?text=Hello%20!%20Interested%20in%20{{ p.name_en | urlencode }}%20(%24{{ p.price }}%20CAD)" class="btn-wa-small" target="_blank">WA</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- TRENDS -->
+<section class="trends" id="tendances">
+  <div class="lang-fr"><div class="section-tag">Tendances 2026</div><h2 class="section-title">Ce qui se porte <em>maintenant</em></h2></div>
+  <div class="lang-en"><div class="section-tag">Trends 2026</div><h2 class="section-title">What's trending <em>now</em></h2></div>
+  <div class="trends-grid">
+    {% for t in trends %}
+    <div class="trend-card">
+      <div class="trend-num">0{{ loop.index }}</div>
+      <div><h3><span class="lang-fr">{{ t.title_fr }}</span><span class="lang-en">{{ t.title_en }}</span></h3><p><span class="lang-fr">{{ t.desc_fr }}</span><span class="lang-en">{{ t.desc_en }}</span></p></div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- ORDER -->
+<section class="order" id="commander">
+  <div class="lang-fr"><div class="section-tag">Commander</div><h2 class="section-title">Passez votre <em>commande</em></h2></div>
+  <div class="lang-en"><div class="section-tag">Order</div><h2 class="section-title">Place your <em>order</em></h2></div>
+  <div class="order-steps">
+    <div class="step"><div class="step-num">1</div><h4><span class="lang-fr">Choisissez</span><span class="lang-en">Choose</span></h4><p><span class="lang-fr">Sélectionnez un modèle</span><span class="lang-en">Select a design</span></p></div>
+    <div class="step"><div class="step-num">2</div><h4><span class="lang-fr">Personnalisez</span><span class="lang-en">Customize</span></h4><p><span class="lang-fr">Mensurations et préférences</span><span class="lang-en">Measurements and preferences</span></p></div>
+    <div class="step"><div class="step-num">3</div><h4><span class="lang-fr">Confirmez</span><span class="lang-en">Confirm</span></h4><p><span class="lang-fr">Aminata valide les détails</span><span class="lang-en">Aminata finalizes details</span></p></div>
+    <div class="step"><div class="step-num">4</div><h4><span class="lang-fr">Recevez</span><span class="lang-en">Receive</span></h4><p><span class="lang-fr">Livraison partout au Canada</span><span class="lang-en">Delivery across Canada</span></p></div>
+  </div>
+  <div class="order-options">
+    <div class="order-wa-box">
+      <div class="lang-fr"><h3>Commander via WhatsApp</h3><p>Le moyen le plus simple ! Envoyez un message avec votre commande, photos d'inspiration et mensurations.</p></div>
+      <div class="lang-en"><h3>Order via WhatsApp</h3><p>The easiest way! Send a message with your order, inspiration photos and measurements.</p></div>
+      <a href="https://wa.me/{{ site.whatsapp }}?text=Bonjour%20Amsama%20Style%20!" class="wa-big" target="_blank"><span class="lang-fr">Ouvrir WhatsApp</span><span class="lang-en">Open WhatsApp</span></a>
+    </div>
+    <div class="order-form-box">
+      <div class="lang-fr"><h3 class="form-title">Formulaire de Commande</h3><p class="form-subtitle">Aminata vous recontactera sous 24h</p></div>
+      <div class="lang-en"><h3 class="form-title">Order Form</h3><p class="form-subtitle">Aminata will contact you within 24h</p></div>
+      <form name="orders" method="POST" data-netlify="true">
+        <div class="form-row"><div class="form-group"><label><span class="lang-fr">Prénom</span><span class="lang-en">First Name</span></label><input type="text" name="prenom" required></div><div class="form-group"><label><span class="lang-fr">Nom</span><span class="lang-en">Last Name</span></label><input type="text" name="nom" required></div></div>
+        <div class="form-row"><div class="form-group"><label>Email</label><input type="email" name="email" required></div><div class="form-group"><label><span class="lang-fr">Téléphone</span><span class="lang-en">Phone</span></label><input type="tel" name="phone" required></div></div>
+        <div class="form-group"><label>Description</label><textarea name="description"></textarea></div>
+        <div class="form-submit"><button type="submit" class="btn-primary"><span class="lang-fr">Envoyer</span><span class="lang-en">Submit</span></button></div>
+      </form>
+    </div>
+  </div>
+  <div class="payment-section">
+    <h4><span class="lang-fr">Moyens de paiement acceptés</span><span class="lang-en">Accepted payment methods</span></h4>
+    <div class="payment-icons">
+      <div class="pay-icon"><div class="pay-icon-sym">💳</div><div class="pay-icon-lbl">Visa</div></div>
+      <div class="pay-icon"><div class="pay-icon-sym">💳</div><div class="pay-icon-lbl">Mastercard</div></div>
+      <div class="pay-icon"><div class="pay-icon-sym">🅿️</div><div class="pay-icon-lbl">PayPal</div></div>
+      <div class="pay-icon"><div class="pay-icon-sym">📱</div><div class="pay-icon-lbl">Apple Pay</div></div>
+      <div class="pay-icon"><div class="pay-icon-sym">🏦</div><div class="pay-icon-lbl">Interac</div></div>
+      <div class="pay-icon"><div class="pay-icon-sym">💵</div><div class="pay-icon-lbl"><span class="lang-fr">Espèces</span><span class="lang-en">Cash</span></div></div>
+      <div class="pay-icon"><div class="pay-icon-sym">📲</div><div class="pay-icon-lbl">Wave / OM</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="avis">
+  <div class="lang-fr"><div class="section-tag">Témoignages</div><h2 class="section-title">Ce que disent nos <em>clientes</em></h2></div>
+  <div class="lang-en"><div class="section-tag">Testimonials</div><h2 class="section-title">What our <em>clients</em> say</h2></div>
+  <div class="reviews-grid">
+    <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text"><span class="lang-fr">"Robe de mariage en bazin brodé. Magnifique !"</span><span class="lang-en">"Wedding dress in embroidered bazin. Stunning!"</span></p><div class="review-author">Fatou D.</div><div class="review-location">Winnipeg, MB</div></div>
+    <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text"><span class="lang-fr">"Ensemble wax pour la fête des mères. Qualité exceptionnelle !"</span><span class="lang-en">"Wax outfit for Mother's Day. Exceptional quality!"</span></p><div class="review-author">Marie-Claire K.</div><div class="review-location">Toronto, ON</div></div>
+    <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text"><span class="lang-fr">"Boubous toujours parfaits. Ma couturière depuis 3 ans !"</span><span class="lang-en">"Boubous always perfect. My seamstress for 3 years!"</span></p><div class="review-author">Aïssatou B.</div><div class="review-location">Winnipeg, MB</div></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="lang-fr"><div class="section-tag">Contact</div><h2 class="section-title">Parlons de votre <em>projet</em></h2></div>
+  <div class="lang-en"><div class="section-tag">Contact</div><h2 class="section-title">Let's talk about your <em>project</em></h2></div>
+  <div class="contact-grid">
+    <div>
+      <div class="contact-info-item"><div class="contact-icon">📍</div><div><h4><span class="lang-fr">Adresse</span><span class="lang-en">Address</span></h4><p>{{ site.address }}<br>{{ site.city }}</p></div></div>
+      <div class="contact-info-item"><div class="contact-icon">📞</div><div><h4><span class="lang-fr">Téléphone</span><span class="lang-en">Phone</span></h4><p><a href="tel:{{ site.phone }}">{{ site.phone }}</a></p></div></div>
+      <div class="contact-info-item"><div class="contact-icon">💬</div><div><h4>WhatsApp</h4><p><a href="https://wa.me/{{ site.whatsapp }}" target="_blank">{{ site.phone }}</a></p></div></div>
+      <div class="contact-info-item"><div class="contact-icon">📧</div><div><h4>Email</h4><p><a href="mailto:{{ site.email }}">{{ site.email }}</a></p></div></div>
+      <div class="contact-info-item"><div class="contact-icon">🕐</div><div><h4><span class="lang-fr">Horaires</span><span class="lang-en">Hours</span></h4><p><span class="lang-fr">{{ site.hours_fr }}</span><span class="lang-en">{{ site.hours_en }}</span></p></div></div>
+      <div class="social-links">
+        {% if site.instagram %}<a href="{{ site.instagram }}" class="social-link" target="_blank">IG</a>{% endif %}
+        {% if site.facebook %}<a href="{{ site.facebook }}" class="social-link" target="_blank">FB</a>{% endif %}
+        {% if site.tiktok %}<a href="{{ site.tiktok }}" class="social-link" target="_blank">TK</a>{% endif %}
+        <a href="https://wa.me/{{ site.whatsapp }}" class="social-link" target="_blank">WA</a>
+      </div>
+    </div>
+    <div>
+      <div class="order-form-box" style="background:var(--blanc)">
+        <h3 class="form-title" style="font-size:1.4rem"><span class="lang-fr">Envoyer un message</span><span class="lang-en">Send a message</span></h3>
+        <form name="contact" method="POST" data-netlify="true" style="margin-top:1.5rem">
+          <div class="form-group"><label><span class="lang-fr">Nom</span><span class="lang-en">Name</span></label><input type="text" name="name" required></div>
+          <div class="form-group"><label>Email</label><input type="email" name="email" required></div>
+          <div class="form-group"><label>Message</label><textarea name="message" rows="4"></textarea></div>
+          <div class="form-submit"><button type="submit" class="btn-primary"><span class="lang-fr">Envoyer</span><span class="lang-en">Send</span></button></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

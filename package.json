@@ -1,0 +1,12 @@
+{
+  "name": "amsama-style",
+  "version": "1.0.0",
+  "description": "Amsama Style - Couture Africaine à Winnipeg",
+  "scripts": {
+    "start": "npx @11ty/eleventy --serve",
+    "build": "npx @11ty/eleventy"
+  },
+  "dependencies": {
+    "@11ty/eleventy": "^2.0.1"
+  }
+}
