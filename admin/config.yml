@@ -10,85 +10,92 @@ locale: "fr"
 collections:
   - name: "products"
     label: "Produits / Products"
-    label_singular: "Produit"
-    file: "_data/products.json"
-    description: "Gérez vos produits — ajoutez, modifiez ou supprimez des articles"
-    editor:
-      preview: false
-    fields:
-      - name: "items"
-        label: "Produits"
-        widget: "list"
+    files:
+      - name: "product-list"
+        label: "Liste des produits"
+        file: "_data/products.json"
         fields:
-          - { name: "id", label: "ID", widget: "number", value_type: "int" }
-          - { name: "name_fr", label: "Nom (Français)", widget: "string" }
-          - { name: "name_en", label: "Name (English)", widget: "string" }
-          - { name: "category", label: "Catégorie", widget: "select", options: ["robe", "boubou", "ensemble", "tissu", "accessoire"] }
-          - { name: "price", label: "Prix ($CAD)", widget: "number", value_type: "int" }
-          - { name: "old_price", label: "Ancien prix (si promo)", widget: "number", value_type: "int", required: false }
-          - { name: "unit", label: "Unité (ex: /yard)", widget: "string", required: false }
-          - { name: "badge_fr", label: "Badge FR (ex: Nouveau, Promo)", widget: "string", required: false }
-          - { name: "badge_en", label: "Badge EN (ex: New, Sale)", widget: "string", required: false }
-          - { name: "image", label: "Photo", widget: "image" }
-          - { name: "description_fr", label: "Description (Français)", widget: "text" }
-          - { name: "description_en", label: "Description (English)", widget: "text" }
+          - name: "items"
+            label: "Produits"
+            widget: "list"
+            fields:
+              - { name: "id", label: "ID", widget: "number", value_type: "int" }
+              - { name: "name_fr", label: "Nom (Français)", widget: "string" }
+              - { name: "name_en", label: "Name (English)", widget: "string" }
+              - name: "category"
+                label: "Catégorie"
+                widget: "select"
+                options:
+                  - { label: "Robe", value: "robe" }
+                  - { label: "Boubou", value: "boubou" }
+                  - { label: "Ensemble", value: "ensemble" }
+                  - { label: "Tissu", value: "tissu" }
+                  - { label: "Accessoire", value: "accessoire" }
+              - { name: "price", label: "Prix ($CAD)", widget: "number", value_type: "int" }
+              - { name: "old_price", label: "Ancien prix (si promo)", widget: "number", value_type: "int", required: false }
+              - { name: "unit", label: "Unité (ex: /yard)", widget: "string", required: false, default: "" }
+              - { name: "badge_fr", label: "Badge FR (ex: Nouveau, Promo)", widget: "string", required: false, default: "" }
+              - { name: "badge_en", label: "Badge EN (ex: New, Sale)", widget: "string", required: false, default: "" }
+              - { name: "image", label: "Photo", widget: "image" }
+              - { name: "description_fr", label: "Description (Français)", widget: "text" }
+              - { name: "description_en", label: "Description (English)", widget: "text" }
 
   - name: "services"
     label: "Services"
-    file: "_data/services.json"
-    description: "Gérez vos services et tarifs"
-    editor:
-      preview: false
-    fields:
-      - name: "items"
-        label: "Services"
-        widget: "list"
+    files:
+      - name: "service-list"
+        label: "Liste des services"
+        file: "_data/services.json"
         fields:
-          - { name: "icon", label: "Icône (emoji)", widget: "string" }
-          - { name: "title_fr", label: "Titre (Français)", widget: "string" }
-          - { name: "title_en", label: "Title (English)", widget: "string" }
-          - { name: "desc_fr", label: "Description (Français)", widget: "text" }
-          - { name: "desc_en", label: "Description (English)", widget: "text" }
-          - { name: "price", label: "Prix", widget: "string" }
+          - name: "items"
+            label: "Services"
+            widget: "list"
+            fields:
+              - { name: "icon", label: "Icône (emoji)", widget: "string" }
+              - { name: "title_fr", label: "Titre (Français)", widget: "string" }
+              - { name: "title_en", label: "Title (English)", widget: "string" }
+              - { name: "desc_fr", label: "Description (Français)", widget: "text" }
+              - { name: "desc_en", label: "Description (English)", widget: "text" }
+              - { name: "price", label: "Prix", widget: "string" }
 
   - name: "trends"
     label: "Tendances / Trends"
-    file: "_data/trends.json"
-    description: "Gérez les tendances mode affichées sur le site"
-    editor:
-      preview: false
-    fields:
-      - name: "items"
-        label: "Tendances"
-        widget: "list"
+    files:
+      - name: "trends-list"
+        label: "Liste des tendances"
+        file: "_data/trends.json"
         fields:
-          - { name: "title_fr", label: "Titre (Français)", widget: "string" }
-          - { name: "title_en", label: "Title (English)", widget: "string" }
-          - { name: "desc_fr", label: "Description (Français)", widget: "text" }
-          - { name: "desc_en", label: "Description (English)", widget: "text" }
+          - name: "items"
+            label: "Tendances"
+            widget: "list"
+            fields:
+              - { name: "title_fr", label: "Titre (Français)", widget: "string" }
+              - { name: "title_en", label: "Title (English)", widget: "string" }
+              - { name: "desc_fr", label: "Description (Français)", widget: "text" }
+              - { name: "desc_en", label: "Description (English)", widget: "text" }
 
   - name: "settings"
-    label: "Paramètres du site / Site Settings"
-    file: "_data/site.json"
-    description: "Informations générales : téléphone, adresse, horaires, à propos"
-    editor:
-      preview: false
-    fields:
-      - { name: "name", label: "Nom de l'entreprise", widget: "string" }
-      - { name: "phone", label: "Téléphone", widget: "string" }
-      - { name: "whatsapp", label: "WhatsApp (numéro sans +)", widget: "string" }
-      - { name: "email", label: "Email", widget: "string" }
-      - { name: "address", label: "Adresse", widget: "string" }
-      - { name: "city", label: "Ville", widget: "string" }
-      - { name: "hours_fr", label: "Horaires (Français)", widget: "string" }
-      - { name: "hours_en", label: "Hours (English)", widget: "string" }
-      - { name: "instagram", label: "Lien Instagram", widget: "string", required: false }
-      - { name: "facebook", label: "Lien Facebook", widget: "string", required: false }
-      - { name: "tiktok", label: "Lien TikTok", widget: "string", required: false }
-      - { name: "about_fr", label: "À propos paragraphe 1 (Français)", widget: "text" }
-      - { name: "about2_fr", label: "À propos paragraphe 2 (Français)", widget: "text" }
-      - { name: "about_en", label: "About paragraph 1 (English)", widget: "text" }
-      - { name: "about2_en", label: "About paragraph 2 (English)", widget: "text" }
-      - { name: "stats_years", label: "Stat: Années d'expérience", widget: "string" }
-      - { name: "stats_clients", label: "Stat: Nombre de clientes", widget: "string" }
-      - { name: "stats_handmade", label: "Stat: Fait main %", widget: "string" }
+    label: "Paramètres / Settings"
+    files:
+      - name: "site-settings"
+        label: "Informations du site"
+        file: "_data/site.json"
+        fields:
+          - { name: "name", label: "Nom de l'entreprise", widget: "string" }
+          - { name: "phone", label: "Téléphone", widget: "string" }
+          - { name: "whatsapp", label: "WhatsApp (numéro sans +)", widget: "string" }
+          - { name: "email", label: "Email", widget: "string" }
+          - { name: "address", label: "Adresse", widget: "string" }
+          - { name: "city", label: "Ville", widget: "string" }
+          - { name: "hours_fr", label: "Horaires (Français)", widget: "string" }
+          - { name: "hours_en", label: "Hours (English)", widget: "string" }
+          - { name: "instagram", label: "Lien Instagram", widget: "string", required: false, default: "" }
+          - { name: "facebook", label: "Lien Facebook", widget: "string", required: false, default: "" }
+          - { name: "tiktok", label: "Lien TikTok", widget: "string", required: false, default: "" }
+          - { name: "about_fr", label: "À propos paragraphe 1 (Français)", widget: "text" }
+          - { name: "about2_fr", label: "À propos paragraphe 2 (Français)", widget: "text" }
+          - { name: "about_en", label: "About paragraph 1 (English)", widget: "text" }
+          - { name: "about2_en", label: "About paragraph 2 (English)", widget: "text" }
+          - { name: "stats_years", label: "Stat: Années d'expérience", widget: "string" }
+          - { name: "stats_clients", label: "Stat: Nombre de clientes", widget: "string" }
+          - { name: "stats_handmade", label: "Stat: Fait main %", widget: "string" }
