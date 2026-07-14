@@ -100,12 +100,14 @@ async function submitReview() {
 // SOUMETTRE UNE COMMANDE
 // =============================================
 async function submitOrder(form) {
+  var prod = form.querySelector('[name="product_name"]');
   var data = {
     first_name: form.querySelector('[name="prenom"]').value.trim(),
     last_name: form.querySelector('[name="nom"]').value.trim(),
     email: form.querySelector('[name="email"]').value.trim(),
     phone: form.querySelector('[name="phone"]').value.trim(),
-    description: form.querySelector('[name="description"]').value.trim()
+    description: form.querySelector('[name="description"]').value.trim(),
+    product_name: prod ? prod.value.trim() : null
   };
 
   var result = await supabase.insert('orders', data);
@@ -203,5 +205,132 @@ document.addEventListener('DOMContentLoaded', function() {
         x.classList.toggle('active', j <= i);
       });
     });
+  });
+});
+
+// =============================================
+// CATALOGUE DYNAMIQUE — adapté structure Eleventy bilingue
+// Grille #productsGrid, filtres #filterBtns (data-f),
+// cartes .product-card (data-cat). Bilingue via .lang-fr/.lang-en
+// =============================================
+var WHATSAPP = '14318667385';
+var _products = [];
+var _filter = 'all';
+
+function currentLang() {
+  // le site bascule via une classe sur <body> ; par défaut FR
+  return document.body.classList.contains('en') ? 'en' : 'fr';
+}
+
+async function loadProductsCatalog() {
+  var grid = document.getElementById('productsGrid');
+  if (!grid) return;
+  try {
+    _products = await supabase.select('products', 'published=eq.true&order=sort_order.asc');
+    renderCatalog();
+  } catch (e) {
+    console.log('Erreur produits:', e);
+  }
+}
+
+function renderCatalog() {
+  var grid = document.getElementById('productsGrid');
+  if (!grid) return;
+  var list = _filter === 'all'
+    ? _products
+    : _products.filter(function (p) { return p.category === _filter; });
+
+  if (!list.length) {
+    grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--terre-light,#999);padding:2rem">'
+      + '<span class="lang-fr">Aucun article dans cette catégorie.</span>'
+      + '<span class="lang-en">No items in this category.</span></p>';
+    applyLang();
+    return;
+  }
+
+  grid.innerHTML = list.map(function (p) {
+    var nameFr = p.name_fr || '';
+    var nameEn = p.name_en || p.name_fr || '';
+    var badge = '';
+    if (p.badge_fr || p.badge_en) {
+      badge = '<div class="product-badge">'
+        + '<span class="lang-fr">' + escapeHtml(p.badge_fr || '') + '</span>'
+        + '<span class="lang-en">' + escapeHtml(p.badge_en || p.badge_fr || '') + '</span></div>';
+    }
+    var unit = p.unit || '';
+    var oldPrice = p.old_price
+      ? ' <span class="old">' + p.old_price + ' $CAD</span>' : '';
+    var waFr = 'https://wa.me/' + WHATSAPP + '?text='
+      + encodeURIComponent('Bonjour ! Je suis intéressé(e) par ' + nameFr + ' (' + (p.price || '') + '$CAD)');
+    var waEn = 'https://wa.me/' + WHATSAPP + '?text='
+      + encodeURIComponent('Hello! Interested in ' + nameEn + ' ($' + (p.price || '') + ' CAD)');
+
+    return '<div class="product-card" data-cat="' + escapeHtml(p.category) + '">'
+      + '<div class="product-img">'
+      +   '<img src="' + escapeHtml(p.image || '') + '" alt="' + escapeHtml(nameFr) + '" loading="lazy">'
+      +   badge
+      + '</div>'
+      + '<div class="product-info">'
+      +   '<div class="product-category">' + escapeHtml(p.category) + '</div>'
+      +   '<div class="product-name">'
+      +     '<span class="lang-fr">' + escapeHtml(nameFr) + '</span>'
+      +     '<span class="lang-en">' + escapeHtml(nameEn) + '</span>'
+      +   '</div>'
+      +   '<div class="product-price">' + (p.price != null ? p.price + ' $CAD' : '') + escapeHtml(unit) + oldPrice + '</div>'
+      +   '<div class="product-actions">'
+      +     '<a href="' + waFr + '" class="btn-add-cart lang-fr" target="_blank">Commander</a>'
+      +     '<a href="' + waEn + '" class="btn-add-cart lang-en" target="_blank">Order</a>'
+      +     '<a href="' + waFr + '" class="btn-wa-small" target="_blank">WA</a>'
+      +   '</div>'
+      + '</div>'
+      + '</div>';
+  }).join('');
+  applyLang();
+}
+
+// Ré-applique l'affichage de langue aux éléments injectés
+function applyLang() {
+  var en = currentLang() === 'en';
+  document.querySelectorAll('#productsGrid .lang-fr').forEach(function (el) {
+    el.style.display = en ? 'none' : '';
+  });
+  document.querySelectorAll('#productsGrid .lang-en').forEach(function (el) {
+    el.style.display = en ? '' : 'none';
+  });
+}
+
+function initCatalogFilters() {
+  var box = document.getElementById('filterBtns');
+  if (!box) return;
+  box.querySelectorAll('.filter-btn').forEach(function (b) {
+    b.addEventListener('click', function () {
+      box.querySelectorAll('.filter-btn').forEach(function (x) { x.classList.remove('active'); });
+      b.classList.add('active');
+      _filter = b.getAttribute('data-f') || 'all';
+      renderCatalog();
+    });
+  });
+}
+
+// Contenu éditable du site (adresse, textes bilingues, tél)
+async function loadSiteContentDynamic() {
+  try {
+    var rows = await supabase.select('site_content', '');
+    var map = {};
+    rows.forEach(function (r) { map[r.key] = r.value; });
+    document.querySelectorAll('[data-sc]').forEach(function (el) {
+      var k = el.getAttribute('data-sc');
+      if (map[k] != null) el.textContent = map[k];
+    });
+  } catch (e) { console.log('content:', e); }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  loadProductsCatalog();
+  initCatalogFilters();
+  loadSiteContentDynamic();
+  // si un bouton de langue existe, on réapplique au clic
+  document.querySelectorAll('[data-lang-toggle],.lang-switch,.lang-btn').forEach(function (b) {
+    b.addEventListener('click', function () { setTimeout(applyLang, 50); });
   });
 });
