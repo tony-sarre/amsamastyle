@@ -1,12 +1,188 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Amsama Style — Admin</title>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amsama Style — Espace Aminata</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Cormorant+Garamond:ital,wght@0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{--gold:#C9A84C;--gold-light:#E8D5A3;--gold-dark:#A07D2E;--terre:#8B4513;--terre-light:#D2A679;--brun:#3E2723;--noir:#1A1008;--creme:#FFF8EE;--creme-dark:#F5E6CC;--blanc:#FFFDF9;--vert:#2D6A4F;--rouge:#8B2E3A}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Jost',sans-serif;background:var(--creme);color:var(--brun)}
+    a{color:var(--gold-dark)}
+    /* Login */
+    .login{min-height:100vh;display:grid;place-items:center;background:linear-gradient(135deg,var(--noir),var(--brun));padding:1rem}
+    .login-card{background:var(--blanc);padding:3rem 2.5rem;width:min(420px,100%);box-shadow:0 20px 60px rgba(0,0,0,.3)}
+    .login-logo{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold-dark);text-align:center;letter-spacing:2px;margin-bottom:.3rem}
+    .login-logo i{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--terre);font-size:1.2rem}
+    .login h2{font-family:'Cormorant Garamond',serif;text-align:center;font-weight:600;margin-bottom:1.5rem;color:var(--terre)}
+    label{display:block;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--terre);margin-bottom:.4rem;font-weight:500}
+    input,select,textarea{width:100%;padding:.85rem 1rem;border:1px solid var(--creme-dark);background:var(--blanc);font-family:'Jost',sans-serif;font-size:.95rem;color:var(--brun);outline:none;margin-bottom:1.2rem;transition:border-color .3s}
+    input:focus,select:focus,textarea:focus{border-color:var(--gold)}
+    textarea{resize:vertical;min-height:90px}
+    .btn{background:var(--gold);color:var(--noir);border:none;padding:.9rem 2rem;font-family:'Jost',sans-serif;font-size:.8rem;letter-spacing:2px;text-transform:uppercase;font-weight:500;cursor:pointer;transition:all .3s}
+    .btn:hover{background:var(--gold-light)}
+    .btn-outline{background:transparent;border:1px solid var(--brun);color:var(--brun)}
+    .btn-outline:hover{background:var(--brun);color:var(--creme)}
+    .btn-danger{background:var(--rouge);color:#fff}.btn-danger:hover{opacity:.85}
+    .btn-ok{background:var(--vert);color:#fff}.btn-ok:hover{opacity:.85}
+    .btn-sm{padding:.5rem 1rem;font-size:.68rem}
+    /* Layout */
+    .topbar{background:var(--noir);color:var(--creme);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;position:sticky;top:0;z-index:20}
+    .topbar .logo{font-family:'Playfair Display',serif;color:var(--gold);letter-spacing:2px;font-size:1.2rem}
+    .tabs{display:flex;gap:.3rem;padding:0 2rem;background:var(--blanc);border-bottom:1px solid var(--creme-dark);flex-wrap:wrap;position:sticky;top:60px;z-index:19}
+    .tab{background:none;border:none;padding:1rem 1.2rem;font-family:'Jost',sans-serif;font-weight:500;font-size:.82rem;color:var(--terre);cursor:pointer;border-bottom:3px solid transparent;letter-spacing:1px}
+    .tab.active{color:var(--brun);border-bottom-color:var(--gold)}
+    .tab .badge{background:var(--rouge);color:#fff;border-radius:20px;padding:.05rem .45rem;font-size:.68rem;margin-left:.3rem}
+    .tab .badge:empty{display:none}
+    main{padding:2rem;max-width:1200px;margin:0 auto}
+    .panel{display:none}.panel.active{display:block}
+    .panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem}
+    h2.title{font-family:'Playfair Display',serif;color:var(--brun);font-weight:700}
+    /* Cartes produits */
+    .grid{display:grid;gap:1.2rem;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+    .pcard{background:var(--blanc);border:1px solid var(--creme-dark);overflow:hidden;display:flex;flex-direction:column}
+    .pcard img{width:100%;aspect-ratio:3/4;object-fit:cover;background:var(--creme-dark)}
+    .pcard .b{padding:1rem;display:flex;flex-direction:column;gap:.4rem;flex:1}
+    .pcard h4{font-family:'Cormorant Garamond',serif;font-size:1.2rem}
+    .pcard .cat{font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:var(--terre-light)}
+    .pcard .pr{font-family:'Playfair Display',serif;color:var(--gold-dark);font-weight:700}
+    .pcard .acts{display:flex;gap:.4rem;margin-top:auto;padding-top:.5rem}
+    .pcard .acts button{flex:1}
+    .chip{font-size:.65rem;padding:.15rem .5rem;border-radius:20px;display:inline-block;width:fit-content}
+    .chip.on{background:#d8f0dd;color:#1c6b34}.chip.off{background:#f0dede;color:#8a2a2a}
+    /* Listes */
+    .list{display:grid;gap:1rem}
+    .item{background:var(--blanc);border:1px solid var(--creme-dark);border-left:4px solid var(--gold);padding:1.2rem 1.4rem}
+    .item.new{border-left-color:var(--rouge);background:#fffdf8}
+    .item .meta{font-size:.75rem;color:var(--terre-light);margin-bottom:.3rem}
+    .item .acts{display:flex;gap:.5rem;margin-top:.8rem;flex-wrap:wrap;align-items:center}
+    /* Modale */
+    .modal{display:none;position:fixed;inset:0;background:rgba(26,16,8,.6);z-index:50;overflow-y:auto;padding:1rem}
+    .modal.open{display:grid;place-items:start center;padding-top:4vh}
+    .modal-card{background:var(--blanc);padding:2rem;width:min(560px,100%)}
+    .modal-card h3{font-family:'Playfair Display',serif;margin-bottom:1.5rem}
+    .row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .prev{max-height:150px;border-radius:6px;margin-bottom:1rem;display:none}
+    .empty{text-align:center;color:var(--terre-light);padding:2rem}
+    .toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:var(--brun);color:var(--creme);padding:.9rem 1.6rem;z-index:100;opacity:0;transition:all .3s;box-shadow:0 8px 30px rgba(0,0,0,.25)}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(-5px)}
+    .toast.err{background:var(--rouge)}
+    @media(max-width:560px){.row2{grid-template-columns:1fr}}
+  </style>
 </head>
 <body>
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
+  <!-- LOGIN -->
+  <div id="login" class="login">
+    <div class="login-card">
+      <div class="login-logo">AMSAMA <i>Style</i></div>
+      <h2>Espace Aminata</h2>
+      <form id="login-form">
+        <label>Email</label>
+        <input type="email" name="email" required>
+        <label>Mot de passe</label>
+        <input type="password" name="password" required>
+        <button class="btn" type="submit" style="width:100%">Se connecter</button>
+        <p id="login-err" style="color:var(--rouge);text-align:center;margin-top:1rem;display:none"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="dash" style="display:none">
+    <div class="topbar">
+      <span class="logo">AMSAMA Style · Admin</span>
+      <div style="display:flex;gap:.5rem">
+        <a class="btn btn-outline btn-sm" href="/" target="_blank" style="color:var(--creme);border-color:var(--gold)">Voir le site</a>
+        <button class="btn btn-outline btn-sm" id="logout" style="color:var(--creme);border-color:var(--gold)">Déconnexion</button>
+      </div>
+    </div>
+
+    <nav class="tabs">
+      <button class="tab active" data-tab="products">Catalogue</button>
+      <button class="tab" data-tab="orders">Commandes <span class="badge" id="b-orders"></span></button>
+      <button class="tab" data-tab="messages">Messages <span class="badge" id="b-messages"></span></button>
+      <button class="tab" data-tab="reviews">Avis <span class="badge" id="b-reviews"></span></button>
+      <button class="tab" data-tab="content">Textes</button>
+    </nav>
+
+    <main>
+      <section id="p-products" class="panel active">
+        <div class="panel-head">
+          <h2 class="title">Catalogue</h2>
+          <button class="btn" onclick="openProduct()">+ Ajouter un article</button>
+        </div>
+        <div style="margin-bottom:1.2rem">
+          <button class="btn btn-outline btn-sm filt active" data-f="all">Tout</button>
+          <button class="btn btn-outline btn-sm filt" data-f="robe">Robes</button>
+          <button class="btn btn-outline btn-sm filt" data-f="tissu">Tissus</button>
+          <button class="btn btn-outline btn-sm filt" data-f="accessoire">Accessoires</button>
+        </div>
+        <div id="prod-grid" class="grid"></div>
+      </section>
+
+      <section id="p-orders" class="panel"><h2 class="title" style="margin-bottom:1.5rem">Commandes</h2><div id="order-list" class="list"></div></section>
+      <section id="p-messages" class="panel"><h2 class="title" style="margin-bottom:1.5rem">Messages</h2><div id="msg-list" class="list"></div></section>
+      <section id="p-reviews" class="panel"><h2 class="title" style="margin-bottom:1.5rem">Avis à modérer</h2><div id="rev-list" class="list"></div></section>
+      <section id="p-content" class="panel"><h2 class="title" style="margin-bottom:1.5rem">Textes du site</h2><div id="content-form" style="max-width:640px"></div></section>
+    </main>
+  </div>
+
+  <!-- MODALE PRODUIT -->
+  <div id="modal" class="modal">
+    <div class="modal-card">
+      <h3 id="modal-title">Ajouter un article</h3>
+      <form id="prod-form">
+        <input type="hidden" name="id">
+        <div class="row2">
+          <div><label>Nom (français) *</label><input name="name_fr" required></div>
+          <div><label>Nom (anglais)</label><input name="name_en" placeholder="Si vide = idem FR"></div>
+        </div>
+        <div class="row2">
+          <div>
+            <label>Catégorie *</label>
+            <select name="category" required>
+              <option value="robe">Robe</option>
+              <option value="boubou">Boubou</option>
+              <option value="ensemble">Ensemble</option>
+              <option value="tissu">Tissu</option>
+              <option value="accessoire">Accessoire</option>
+            </select>
+          </div>
+          <div>
+            <label>Unité (tissus)</label>
+            <input name="unit" placeholder="ex : /mètre, /6 yards">
+          </div>
+        </div>
+        <div class="row2">
+          <div><label>Badge FR</label><input name="badge_fr" placeholder="Nouveau, Prestige…"></div>
+          <div><label>Badge EN</label><input name="badge_en" placeholder="New, Prestige…"></div>
+        </div>
+        <div class="row2">
+          <div><label>Prix (CAD)</label><input name="price" type="number" step="0.01" placeholder="Vide = sur devis"></div>
+          <div><label>Prix barré (promo)</label><input name="old_price" type="number" step="0.01"></div>
+        </div>
+        <label>Photo</label>
+        <img id="prev" class="prev">
+        <input type="file" id="prod-file" accept="image/*">
+        <input name="image_url" placeholder="ou URL d'image (/images/... ou https://...)">
+        <div class="row2">
+          <div><label>Ordre</label><input name="sort_order" type="number" value="0"></div>
+          <div style="display:flex;align-items:center;gap:.5rem;margin-top:1.6rem">
+            <input type="checkbox" name="published" id="pub" checked style="width:auto;margin:0">
+            <label for="pub" style="margin:0">Visible sur le site</label>
+          </div>
+        </div>
+        <div style="display:flex;gap:.6rem;margin-top:.5rem">
+          <button class="btn" type="submit">Enregistrer</button>
+          <button class="btn btn-outline" type="button" onclick="closeModal()">Annuler</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/admin/admin.js"></script>
 </body>
 </html>
