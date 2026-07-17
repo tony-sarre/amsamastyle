@@ -39,7 +39,7 @@ document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
   t.classList.add('active'); $('#p-'+t.dataset.tab).classList.add('active');
 }));
 
-function loadAll(){ loadProducts(); loadOrders(); loadMessages(); loadReviews(); loadContent(); }
+function loadAll(){ loadProducts(); loadOrders(); loadMessages(); loadReviews(); loadContent(); loadServicesAdmin(); loadTrendsAdmin(); }
 
 // ---------- PRODUITS ----------
 let _prodFilter='all', _prods=[];
@@ -213,22 +213,75 @@ async function approve(id,val){await sb.from('reviews').update({approved:val}).e
 window.approve=approve;
 
 // ---------- TEXTES ----------
-const LBL={hero_title:'Titre principal',hero_subtitle:'Sous-titre',about_text:'Texte "À propos"',contact_address:'Adresse',contact_phone:'Téléphone'};
+// ---------- TEXTES groupés par section ----------
+const GRP_LABELS = {accueil:'🏠 Accueil', apropos:'👤 À propos', contact:'📞 Contact', general:'Divers'};
 async function loadContent(){
-  const { data, error }=await sb.from('site_content').select('*');
+  const { data, error }=await sb.from('site_content').select('*').order('grp').order('sort');
   const w=$('#content-form'); if(error){w.innerHTML=`<p class="empty">${esc(error.message)}</p>`;return;}
-  w.innerHTML=(data||[]).map(c=>`
-    <label>${esc(LBL[c.key]||c.key)}</label>
-    <textarea data-key="${esc(c.key)}" rows="${(c.value||'').length>60?3:1}">${esc(c.value||'')}</textarea>
-  `).join('')+`<button class="btn" onclick="saveContent()">Enregistrer les textes</button>`;
+  // grouper par grp
+  const groups={};
+  (data||[]).forEach(c=>{ (groups[c.grp||'general']=groups[c.grp||'general']||[]).push(c); });
+  let html='';
+  Object.keys(groups).forEach(g=>{
+    html+=`<h3 style="font-family:'Playfair Display',serif;margin:1.5rem 0 .8rem;color:var(--gold-dark)">${GRP_LABELS[g]||g}</h3>`;
+    groups[g].forEach(c=>{
+      html+=`<label>${esc(c.label||c.key)}</label>
+        <textarea data-key="${esc(c.key)}" rows="${(c.value||'').length>60?3:1}">${esc(c.value||'')}</textarea>`;
+    });
+  });
+  html+=`<button class="btn" onclick="saveContent()" style="margin-top:1rem">Enregistrer les textes</button>`;
+  w.innerHTML=html;
 }
 async function saveContent(){
   const rows=[...document.querySelectorAll('#content-form textarea')].map(t=>({key:t.dataset.key,value:t.value,updated_at:new Date().toISOString()}));
   const { error }=await sb.from('site_content').upsert(rows);
   if(error)return toast('Erreur : '+error.message,true);
-  toast('Textes enregistrés');
+  toast('Textes enregistrés ✅');
 }
 window.saveContent=saveContent;
+
+// ---------- SERVICES ----------
+async function loadServicesAdmin(){
+  const w=$('#services-list'); if(!w) return;
+  const { data, error }=await sb.from('services').select('*').order('sort_order');
+  if(error){w.innerHTML=`<p class="empty">${esc(error.message)}</p>`;return;}
+  w.innerHTML=(data||[]).map(s=>`
+    <div class="item">
+      <div class="row2">
+        <div><label>Icône</label><input value="${esc(s.icon||'')}" onchange="updSvc('${s.id}','icon',this.value)"></div>
+        <div><label>Prix</label><input value="${esc(s.price||'')}" onchange="updSvc('${s.id}','price',this.value)"></div>
+      </div>
+      <label>Titre FR</label><input value="${esc(s.title_fr||'')}" onchange="updSvc('${s.id}','title_fr',this.value)">
+      <label>Titre EN</label><input value="${esc(s.title_en||'')}" onchange="updSvc('${s.id}','title_en',this.value)">
+      <label>Description FR</label><textarea onchange="updSvc('${s.id}','desc_fr',this.value)">${esc(s.desc_fr||'')}</textarea>
+      <label>Description EN</label><textarea onchange="updSvc('${s.id}','desc_en',this.value)">${esc(s.desc_en||'')}</textarea>
+      <button class="btn btn-danger btn-sm" onclick="delRow('services','${s.id}',loadServicesAdmin)">Supprimer</button>
+    </div>`).join('')+`<button class="btn" onclick="addSvc()">+ Ajouter un service</button>`;
+}
+async function updSvc(id,field,val){ await sb.from('services').update({[field]:val}).eq('id',id); toast('Service mis à jour'); }
+window.updSvc=updSvc;
+async function addSvc(){ await sb.from('services').insert({title_fr:'Nouveau service',icon:'✨',sort_order:99}); toast('Service ajouté'); loadServicesAdmin(); }
+window.addSvc=addSvc;
+
+// ---------- TRENDS ----------
+async function loadTrendsAdmin(){
+  const w=$('#trends-list'); if(!w) return;
+  const { data, error }=await sb.from('trends').select('*').order('sort_order');
+  if(error){w.innerHTML=`<p class="empty">${esc(error.message)}</p>`;return;}
+  w.innerHTML=(data||[]).map(t=>`
+    <div class="item">
+      <label>Titre FR</label><input value="${esc(t.title_fr||'')}" onchange="updTrend('${t.id}','title_fr',this.value)">
+      <label>Titre EN</label><input value="${esc(t.title_en||'')}" onchange="updTrend('${t.id}','title_en',this.value)">
+      <label>Description FR</label><textarea onchange="updTrend('${t.id}','desc_fr',this.value)">${esc(t.desc_fr||'')}</textarea>
+      <label>Description EN</label><textarea onchange="updTrend('${t.id}','desc_en',this.value)">${esc(t.desc_en||'')}</textarea>
+      <button class="btn btn-danger btn-sm" onclick="delRow('trends','${t.id}',loadTrendsAdmin)">Supprimer</button>
+    </div>`).join('')+`<button class="btn" onclick="addTrend()">+ Ajouter une tendance</button>`;
+}
+async function updTrend(id,field,val){ await sb.from('trends').update({[field]:val}).eq('id',id); toast('Tendance mise à jour'); }
+window.updTrend=updTrend;
+async function addTrend(){ await sb.from('trends').insert({title_fr:'Nouvelle tendance',sort_order:99}); toast('Tendance ajoutée'); loadTrendsAdmin(); }
+window.addTrend=addTrend;
+
 
 // ---------- Suppression générique ----------
 async function delRow(table,id,reload){
