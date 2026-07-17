@@ -313,24 +313,116 @@ function reapplyActiveFilter() {
   });
 }
 
-// Contenu éditable du site (adresse, textes bilingues, tél)
+// Contenu éditable du site — stocke la map globale pour le bilingue
+var _content = {};
+
 async function loadSiteContentDynamic() {
   try {
     var rows = await supabase.select('site_content', '');
-    var map = {};
-    rows.forEach(function (r) { map[r.key] = r.value; });
-    document.querySelectorAll('[data-sc]').forEach(function (el) {
-      var k = el.getAttribute('data-sc');
-      if (map[k] != null) el.textContent = map[k];
-    });
+    _content = {};
+    rows.forEach(function (r) { _content[r.key] = r.value; });
+    applyContent();
   } catch (e) { console.log('content:', e); }
+}
+
+// Applique les textes. Pour un élément data-sc="cle", si des variantes
+// _fr/_en existent, on choisit selon la langue ; sinon valeur simple.
+function applyContent() {
+  var lang = currentLang();
+  document.querySelectorAll('[data-sc]').forEach(function (el) {
+    var k = el.getAttribute('data-sc');
+    var val = null;
+    if (_content[k + '_' + lang] != null) val = _content[k + '_' + lang];
+    else if (_content[k] != null) val = _content[k];
+
+    var attr = el.getAttribute('data-sc-attr');
+    var isSocial = el.hasAttribute('data-social');
+
+    if (isSocial) {
+      // lien réseau social : masqué si vide, sinon href renseigné
+      if (val && val.trim()) {
+        el.setAttribute('href', val);
+        el.style.display = '';
+      } else {
+        el.style.display = 'none';
+      }
+      return;
+    }
+
+    if (val != null) {
+      if (attr) el.setAttribute(attr, val);
+      else el.textContent = val;
+    }
+  });
+}
+
+// SERVICES dynamiques
+async function loadServices() {
+  var grid = document.getElementById('servicesGrid');
+  if (!grid) return;
+  try {
+    var rows = await supabase.select('services', 'order=sort_order.asc');
+    if (!rows.length) return;
+    grid.innerHTML = rows.map(function (s) {
+      return '<div class="service-card">'
+        + '<div class="service-icon">' + escapeHtml(s.icon || '') + '</div>'
+        + '<h3><span class="lang-fr">' + escapeHtml(s.title_fr || '') + '</span>'
+        +     '<span class="lang-en">' + escapeHtml(s.title_en || s.title_fr || '') + '</span></h3>'
+        + '<p><span class="lang-fr">' + escapeHtml(s.desc_fr || '') + '</span>'
+        +    '<span class="lang-en">' + escapeHtml(s.desc_en || s.desc_fr || '') + '</span></p>'
+        + '<div class="price">' + escapeHtml(s.price || '') + '</div>'
+        + '</div>';
+    }).join('');
+    applyLangIn('#servicesGrid');
+  } catch (e) { console.log('services:', e); }
+}
+
+// TRENDS dynamiques
+async function loadTrends() {
+  var grid = document.getElementById('trendsGrid');
+  if (!grid) return;
+  try {
+    var rows = await supabase.select('trends', 'order=sort_order.asc');
+    if (!rows.length) return;
+    grid.innerHTML = rows.map(function (t, i) {
+      var num = (i + 1 < 10 ? '0' : '') + (i + 1);
+      return '<div class="trend-card">'
+        + '<div class="trend-num">' + num + '</div>'
+        + '<div><h3><span class="lang-fr">' + escapeHtml(t.title_fr || '') + '</span>'
+        +         '<span class="lang-en">' + escapeHtml(t.title_en || t.title_fr || '') + '</span></h3>'
+        + '<p><span class="lang-fr">' + escapeHtml(t.desc_fr || '') + '</span>'
+        +    '<span class="lang-en">' + escapeHtml(t.desc_en || t.desc_fr || '') + '</span></p></div>'
+        + '</div>';
+    }).join('');
+    applyLangIn('#trendsGrid');
+  } catch (e) { console.log('trends:', e); }
+}
+
+// Applique la langue à un conteneur injecté dynamiquement
+function applyLangIn(selector) {
+  var en = currentLang() === 'en';
+  document.querySelectorAll(selector + ' .lang-fr').forEach(function (el) {
+    el.style.display = en ? 'none' : '';
+  });
+  document.querySelectorAll(selector + ' .lang-en').forEach(function (el) {
+    el.style.display = en ? '' : 'none';
+  });
 }
 
 document.addEventListener('DOMContentLoaded', function () {
   loadProductsCatalog();
   loadSiteContentDynamic();
-  // si un bouton de langue existe, on réapplique la langue au clic
+  loadServices();
+  loadTrends();
+  // au changement de langue, on réapplique tout
   document.querySelectorAll('.lang-btn').forEach(function (b) {
-    b.addEventListener('click', function () { setTimeout(applyLang, 50); });
+    b.addEventListener('click', function () {
+      setTimeout(function () {
+        applyLang();
+        applyContent();
+        applyLangIn('#servicesGrid');
+        applyLangIn('#trendsGrid');
+      }, 50);
+    });
   });
 });
