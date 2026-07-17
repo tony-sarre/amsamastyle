@@ -215,7 +215,6 @@ document.addEventListener('DOMContentLoaded', function() {
 // =============================================
 var WHATSAPP = '14318667385';
 var _products = [];
-var _filter = 'all';
 
 function currentLang() {
   // le site bascule via une classe sur <body> ; par défaut FR
@@ -236,14 +235,14 @@ async function loadProductsCatalog() {
 function renderCatalog() {
   var grid = document.getElementById('productsGrid');
   if (!grid) return;
-  var list = _filter === 'all'
-    ? _products
-    : _products.filter(function (p) { return p.category === _filter; });
+  // On rend TOUTES les cartes ; le filtre de layout.njk se charge
+  // ensuite d'afficher/masquer selon la catégorie active.
+  var list = _products;
 
   if (!list.length) {
     grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--terre-light,#999);padding:2rem">'
-      + '<span class="lang-fr">Aucun article dans cette catégorie.</span>'
-      + '<span class="lang-en">No items in this category.</span></p>';
+      + '<span class="lang-fr">Aucun article pour le moment.</span>'
+      + '<span class="lang-en">No items yet.</span></p>';
     applyLang();
     return;
   }
@@ -286,6 +285,7 @@ function renderCatalog() {
       + '</div>';
   }).join('');
   applyLang();
+  reapplyActiveFilter();
 }
 
 // Ré-applique l'affichage de langue aux éléments injectés
@@ -299,16 +299,17 @@ function applyLang() {
   });
 }
 
-function initCatalogFilters() {
-  var box = document.getElementById('filterBtns');
-  if (!box) return;
-  box.querySelectorAll('.filter-btn').forEach(function (b) {
-    b.addEventListener('click', function () {
-      box.querySelectorAll('.filter-btn').forEach(function (x) { x.classList.remove('active'); });
-      b.classList.add('active');
-      _filter = b.getAttribute('data-f') || 'all';
-      renderCatalog();
-    });
+// NOTE : le filtre par catégorie est DÉJÀ géré par ton layout.njk
+// (le <script> en bas de page qui écoute .filter-btn et lit data-cat).
+// On ne le redéfinit donc PAS ici, pour éviter tout doublon.
+// On se contente de ré-appliquer le filtre actif après que les cartes
+// ont été injectées (sinon le filtre du layout n'a rien à filtrer au
+// chargement, puisque la grille est encore vide à ce moment-là).
+function reapplyActiveFilter() {
+  var activeBtn = document.querySelector('#filterBtns .filter-btn.active');
+  var f = activeBtn ? activeBtn.getAttribute('data-f') : 'all';
+  document.querySelectorAll('.product-card').forEach(function (c) {
+    c.style.display = (f === 'all' || c.getAttribute('data-cat') === f) ? '' : 'none';
   });
 }
 
@@ -327,10 +328,9 @@ async function loadSiteContentDynamic() {
 
 document.addEventListener('DOMContentLoaded', function () {
   loadProductsCatalog();
-  initCatalogFilters();
   loadSiteContentDynamic();
-  // si un bouton de langue existe, on réapplique au clic
-  document.querySelectorAll('[data-lang-toggle],.lang-switch,.lang-btn').forEach(function (b) {
+  // si un bouton de langue existe, on réapplique la langue au clic
+  document.querySelectorAll('.lang-btn').forEach(function (b) {
     b.addEventListener('click', function () { setTimeout(applyLang, 50); });
   });
 });
