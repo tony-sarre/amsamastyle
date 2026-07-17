@@ -1,0 +1,173 @@
+---
+layout: layout.njk
+---
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg-image"></div><div class="hero-overlay"></div><div class="hero-pattern"></div>
+  <div class="hero-content">
+    <div class="lang-fr"><div class="hero-tag" data-sc="hero_tag_fr">Couture Africaine — Winnipeg, Canada</div><h1 data-sc="hero_title_fr">L'Élégance Africaine Sublimée</h1><p data-sc="hero_sub_fr">Créations sur mesure, tenues prêt-à-porter et tissus wax d'exception.</p></div>
+    <div class="lang-en"><div class="hero-tag" data-sc="hero_tag_en">African Fashion — Winnipeg, Canada</div><h1 data-sc="hero_title_en">African Elegance Elevated</h1><p data-sc="hero_sub_en">Custom creations, ready-to-wear outfits and premium African fabrics.</p></div>
+    <div class="hero-btns">
+      <a href="#collection" class="btn-primary"><span class="lang-fr">Découvrir la Collection</span><span class="lang-en">Explore Collection</span></a>
+      <a href="https://wa.me/14318667385?text=Bonjour%20Amsama%20Style%20!" class="btn-whatsapp" target="_blank"><span class="lang-fr">Commander via WhatsApp</span><span class="lang-en">Order via WhatsApp</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-image"><img src="/images/robe-teranga.jpg" alt="Amsama Style" class="about-img-main"><div class="about-image-accent"></div></div>
+  <div>
+    <div class="lang-fr"><div class="section-tag">Notre Histoire</div><h2 class="section-title">Du Sénégal au Canada,<br>le <em>fil</em> de l'élégance</h2><p class="section-desc" data-sc="about_fr" style="margin-bottom:1.5rem"></p><p class="section-desc" data-sc="about2_fr"></p></div>
+    <div class="lang-en"><div class="section-tag">Our Story</div><h2 class="section-title">From Senegal to Canada,<br>the <em>thread</em> of elegance</h2><p class="section-desc" data-sc="about_en" style="margin-bottom:1.5rem"></p><p class="section-desc" data-sc="about2_en"></p></div>
+    <div class="about-stats">
+      <div><div class="stat-num" data-sc="stats_years">10+</div><div class="stat-label"><span class="lang-fr">Années d'expérience</span><span class="lang-en">Years of experience</span></div></div>
+      <div><div class="stat-num" data-sc="stats_clients">500+</div><div class="stat-label"><span class="lang-fr">Clientes satisfaites</span><span class="lang-en">Happy clients</span></div></div>
+      <div><div class="stat-num" data-sc="stats_handmade">100%</div><div class="stat-label"><span class="lang-fr">Fait main</span><span class="lang-en">Handmade</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="lang-fr"><div class="section-tag">Nos Services</div><h2 class="section-title">Un savoir-faire <em>complet</em></h2></div>
+  <div class="lang-en"><div class="section-tag">Our Services</div><h2 class="section-title">Complete <em>craftsmanship</em></h2></div>
+  <div class="services-grid" id="servicesGrid"></div>
+</section>
+
+<!-- ============================================================ -->
+<!-- COLLECTION  ▼▼▼  MODIFIÉE : chargée en direct depuis Supabase -->
+<!-- L'ancienne boucle de produits a été RETIRÉE.                  -->
+<!-- La grille #productsGrid est remplie par /css/supabase.js      -->
+<!-- ============================================================ -->
+<section class="collection" id="collection">
+  <div class="lang-fr"><div class="section-tag">Notre Collection</div><h2 class="section-title">Explorez nos <em>créations</em></h2></div>
+  <div class="lang-en"><div class="section-tag">Our Collection</div><h2 class="section-title">Explore our <em>creations</em></h2></div>
+  <div class="collection-filter" id="filterBtns">
+    <button class="filter-btn active" data-f="all"><span class="lang-fr">Tout voir</span><span class="lang-en">View all</span></button>
+    <button class="filter-btn" data-f="robe"><span class="lang-fr">Robes</span><span class="lang-en">Dresses</span></button>
+    <button class="filter-btn" data-f="boubou">Boubous</button>
+    <button class="filter-btn" data-f="ensemble"><span class="lang-fr">Ensembles</span><span class="lang-en">Outfits</span></button>
+    <button class="filter-btn" data-f="tissu"><span class="lang-fr">Tissus</span><span class="lang-en">Fabrics</span></button>
+    <button class="filter-btn" data-f="accessoire"><span class="lang-fr">Accessoires</span><span class="lang-en">Accessories</span></button>
+  </div>
+  <!-- Grille remplie automatiquement par supabase.js -->
+  <div class="collection-grid" id="productsGrid">
+    <p style="grid-column:1/-1;text-align:center;color:var(--terre-light,#999);padding:2rem">
+      <span class="lang-fr">Chargement de la collection…</span>
+      <span class="lang-en">Loading collection…</span>
+    </p>
+  </div>
+</section>
+<!-- ▲▲▲  FIN COLLECTION MODIFIÉE ▲▲▲ -->
+
+<!-- TRENDS -->
+<section class="trends" id="tendances">
+  <div class="lang-fr"><div class="section-tag">Tendances 2026</div><h2 class="section-title">Ce qui se porte <em>maintenant</em></h2></div>
+  <div class="lang-en"><div class="section-tag">Trends 2026</div><h2 class="section-title">What's trending <em>now</em></h2></div>
+  <div class="trends-grid" id="trendsGrid"></div>
+</section>
+
+<!-- ORDER -->
+<section class="order" id="commander">
+  <div class="lang-fr"><div class="section-tag">Commander</div><h2 class="section-title">Passez votre <em>commande</em></h2></div>
+  <div class="lang-en"><div class="section-tag">Order</div><h2 class="section-title">Place your <em>order</em></h2></div>
+  <div class="order-steps">
+    <div class="step"><div class="step-num">1</div><h4><span class="lang-fr">Choisissez</span><span class="lang-en">Choose</span></h4><p><span class="lang-fr">Sélectionnez un modèle</span><span class="lang-en">Select a design</span></p></div>
+    <div class="step"><div class="step-num">2</div><h4><span class="lang-fr">Personnalisez</span><span class="lang-en">Customize</span></h4><p><span class="lang-fr">Mensurations et préférences</span><span class="lang-en">Measurements and preferences</span></p></div>
+    <div class="step"><div class="step-num">3</div><h4><span class="lang-fr">Confirmez</span><span class="lang-en">Confirm</span></h4><p><span class="lang-fr">Aminata valide les détails</span><span class="lang-en">Aminata finalizes details</span></p></div>
+    <div class="step"><div class="step-num">4</div><h4><span class="lang-fr">Recevez</span><span class="lang-en">Receive</span></h4><p><span class="lang-fr">Livraison partout au Canada</span><span class="lang-en">Delivery across Canada</span></p></div>
+  </div>
+  <div class="order-options">
+    <div class="order-wa-box">
+      <div class="lang-fr"><h3>Commander via WhatsApp</h3><p>Le moyen le plus simple ! Envoyez un message avec votre commande, photos d'inspiration et mensurations.</p></div>
+      <div class="lang-en"><h3>Order via WhatsApp</h3><p>The easiest way! Send a message with your order, inspiration photos and measurements.</p></div>
+      <a href="https://wa.me/14318667385?text=Bonjour%20Amsama%20Style%20!" class="wa-big" target="_blank"><span class="lang-fr">Ouvrir WhatsApp</span><span class="lang-en">Open WhatsApp</span></a>
+    </div>
+    <div class="order-form-box">
+      <div class="lang-fr"><h3 class="form-title">Formulaire de Commande</h3><p class="form-subtitle">Aminata vous recontactera sous 24h</p></div>
+      <div class="lang-en"><h3 class="form-title">Order Form</h3><p class="form-subtitle">Aminata will contact you within 24h</p></div>
+      <!-- ▼ MODIFIÉ : Netlify Forms retiré → envoi via Supabase (supabase.js) -->
+      <form name="orders">
+        <div class="form-row"><div class="form-group"><label><span class="lang-fr">Prénom</span><span class="lang-en">First Name</span></label><input type="text" name="prenom" required></div><div class="form-group"><label><span class="lang-fr">Nom</span><span class="lang-en">Last Name</span></label><input type="text" name="nom" required></div></div>
+        <div class="form-row"><div class="form-group"><label>Email</label><input type="email" name="email" required></div><div class="form-group"><label><span class="lang-fr">Téléphone</span><span class="lang-en">Phone</span></label><input type="tel" name="phone" required></div></div>
+        <div class="form-group"><label>Description</label><textarea name="description"></textarea></div>
+        <div class="form-submit"><button type="submit" class="btn-primary"><span class="lang-fr">Envoyer</span><span class="lang-en">Submit</span></button></div>
+      </form>
+      <!-- ▲ FIN formulaire commande modifié -->
+    </div>
+  </div>
+  <div class="payment-section">
+    <h4><span class="lang-fr">Moyens de paiement acceptés</span><span class="lang-en">Accepted payment methods</span></h4>
+    <div class="payment-icons">
+      <div class="pay-icon"><div class="pay-icon-sym">💳</div><div class="pay-icon-lbl">Visa</div></div>
+      <div class="pay-icon"><div class="pay-icon-sym">💳</div><div class="pay-icon-lbl">Mastercard</div></div>
+      <div class="pay-icon"><div class="pay-icon-sym">🅿️</div><div class="pay-icon-lbl">PayPal</div></div>
+      <div class="pay-icon"><div class="pay-icon-sym">📱</div><div class="pay-icon-lbl">Apple Pay</div></div>
+      <div class="pay-icon"><div class="pay-icon-sym">🏦</div><div class="pay-icon-lbl">Interac</div></div>
+      <div class="pay-icon"><div class="pay-icon-sym">💵</div><div class="pay-icon-lbl"><span class="lang-fr">Espèces</span><span class="lang-en">Cash</span></div></div>
+      <div class="pay-icon"><div class="pay-icon-sym">📲</div><div class="pay-icon-lbl">Wave / OM</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="avis">
+  <div class="lang-fr"><div class="section-tag">Témoignages</div><h2 class="section-title">Ce que disent nos <em>clientes</em></h2></div>
+  <div class="lang-en"><div class="section-tag">Testimonials</div><h2 class="section-title">What our <em>clients</em> say</h2></div>
+  <!-- ▼ MODIFIÉ : grille remplie par supabase.js (avis approuvés). -->
+  <!--   Les 3 avis ci-dessous restent comme repli si Supabase est vide. -->
+  <div class="reviews-grid" id="reviewsGrid">
+    <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text"><span class="lang-fr">"Robe de mariage en bazin brodé. Magnifique !"</span><span class="lang-en">"Wedding dress in embroidered bazin. Stunning!"</span></p><div class="review-author">Fatou D.</div><div class="review-location">Winnipeg, MB</div></div>
+    <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text"><span class="lang-fr">"Ensemble wax pour la fête des mères. Qualité exceptionnelle !"</span><span class="lang-en">"Wax outfit for Mother's Day. Exceptional quality!"</span></p><div class="review-author">Marie-Claire K.</div><div class="review-location">Toronto, ON</div></div>
+    <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text"><span class="lang-fr">"Boubous toujours parfaits. Ma couturière depuis 3 ans !"</span><span class="lang-en">"Boubous always perfect. My seamstress for 3 years!"</span></p><div class="review-author">Aïssatou B.</div><div class="review-location">Winnipeg, MB</div></div>
+  </div>
+
+  <!-- ▼ AJOUT : formulaire pour qu'une cliente laisse un avis (envoi Supabase) -->
+  <div class="review-form-box" style="max-width:560px;margin:2.5rem auto 0">
+    <div class="lang-fr"><h3 class="form-title" style="text-align:center">Laisser un avis</h3></div>
+    <div class="lang-en"><h3 class="form-title" style="text-align:center">Leave a review</h3></div>
+    <div class="form-group"><label><span class="lang-fr">Votre nom</span><span class="lang-en">Your name</span></label><input type="text" id="revName"></div>
+    <div class="form-group"><label><span class="lang-fr">Ville</span><span class="lang-en">City</span></label><input type="text" id="revCity"></div>
+    <div class="form-group"><label><span class="lang-fr">Note</span><span class="lang-en">Rating</span></label>
+      <div id="starRating" style="font-size:1.8rem;cursor:pointer;color:#ddd;letter-spacing:4px"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+    </div>
+    <div class="form-group"><label>Message</label><textarea id="revText" rows="3"></textarea></div>
+    <div class="form-submit"><button type="button" id="revSubmit" class="btn-primary"><span class="lang-fr">Publier</span><span class="lang-en">Publish</span></button></div>
+  </div>
+  <!-- ▲ FIN section avis modifiée -->
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="lang-fr"><div class="section-tag">Contact</div><h2 class="section-title">Parlons de votre <em>projet</em></h2></div>
+  <div class="lang-en"><div class="section-tag">Contact</div><h2 class="section-title">Let's talk about your <em>project</em></h2></div>
+  <div class="contact-grid">
+    <div>
+      <div class="contact-info-item"><div class="contact-icon">📍</div><div><h4><span class="lang-fr">Adresse</span><span class="lang-en">Address</span></h4><p><span data-sc="address">60 Raphael Street</span><br><span data-sc="city">Winnipeg, MB</span></p></div></div>
+      <div class="contact-info-item"><div class="contact-icon">📞</div><div><h4><span class="lang-fr">Téléphone</span><span class="lang-en">Phone</span></h4><p><a href="tel:+14318667385"><span data-sc="phone">+1 (431) 866-7385</span></a></p></div></div>
+      <div class="contact-info-item"><div class="contact-icon">💬</div><div><h4>WhatsApp</h4><p><a href="https://wa.me/14318667385" target="_blank"><span data-sc="phone">+1 (431) 866-7385</span></a></p></div></div>
+      <div class="contact-info-item"><div class="contact-icon">📧</div><div><h4>Email</h4><p><a href="mailto:contact@amsama-style.com"><span data-sc="email">contact@amsama-style.com</span></a></p></div></div>
+      <div class="contact-info-item"><div class="contact-icon">🕐</div><div><h4><span class="lang-fr">Horaires</span><span class="lang-en">Hours</span></h4><p><span class="lang-fr" data-sc="hours_fr">Lundi — Samedi : 9h à 18h</span><span class="lang-en" data-sc="hours_en">Monday — Saturday: 9AM to 6PM</span></p></div></div>
+      <div class="social-links">
+        <a href="#" class="social-link" data-sc="instagram" data-sc-attr="href" data-social target="_blank">IG</a>
+        <a href="#" class="social-link" data-sc="facebook" data-sc-attr="href" data-social target="_blank">FB</a>
+        <a href="#" class="social-link" data-sc="tiktok" data-sc-attr="href" data-social target="_blank">TK</a>
+        <a href="https://wa.me/14318667385" class="social-link" target="_blank">WA</a>
+      </div>
+    </div>
+    <div>
+      <div class="order-form-box" style="background:var(--blanc)">
+        <h3 class="form-title" style="font-size:1.4rem"><span class="lang-fr">Envoyer un message</span><span class="lang-en">Send a message</span></h3>
+        <!-- ▼ MODIFIÉ : Netlify Forms retiré → envoi via Supabase -->
+        <form name="contact" style="margin-top:1.5rem">
+          <div class="form-group"><label><span class="lang-fr">Nom</span><span class="lang-en">Name</span></label><input type="text" name="name" required></div>
+          <div class="form-group"><label>Email</label><input type="email" name="email" required></div>
+          <div class="form-group"><label>Message</label><textarea name="message" rows="4"></textarea></div>
+          <div class="form-submit"><button type="submit" class="btn-primary"><span class="lang-fr">Envoyer</span><span class="lang-en">Send</span></button></div>
+        </form>
+        <!-- ▲ FIN formulaire contact modifié -->
+      </div>
+    </div>
+  </div>
+</section>
