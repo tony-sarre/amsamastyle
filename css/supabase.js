@@ -258,11 +258,11 @@ function renderCatalog() {
     }
     var unit = p.unit || '';
     var oldPrice = p.old_price
-      ? ' <span class="old">' + p.old_price + ' $CAD</span>' : '';
+      ? ' <span class="old">CAD $' + p.old_price + '</span>' : '';
     var waFr = 'https://wa.me/' + WHATSAPP + '?text='
-      + encodeURIComponent('Bonjour ! Je suis intéressé(e) par ' + nameFr + ' (' + (p.price || '') + '$CAD)');
+      + encodeURIComponent('Bonjour ! Je suis intéressé(e) par ' + nameFr + ' (CAD $' + (p.price || '') + ')');
     var waEn = 'https://wa.me/' + WHATSAPP + '?text='
-      + encodeURIComponent('Hello! Interested in ' + nameEn + ' ($' + (p.price || '') + ' CAD)');
+      + encodeURIComponent('Hello! Interested in ' + nameEn + ' (CAD $' + (p.price || '') + ')');
 
     return '<div class="product-card" data-cat="' + escapeHtml(p.category) + '">'
       + '<div class="product-img">'
@@ -275,7 +275,7 @@ function renderCatalog() {
       +     '<span class="lang-fr">' + escapeHtml(nameFr) + '</span>'
       +     '<span class="lang-en">' + escapeHtml(nameEn) + '</span>'
       +   '</div>'
-      +   '<div class="product-price">' + (p.price != null ? p.price + ' $CAD' : '') + escapeHtml(unit) + oldPrice + '</div>'
+      +   '<div class="product-price">' + (p.price != null ? 'CAD $' + p.price : '') + escapeHtml(unit) + oldPrice + '</div>'
       +   '<div class="product-actions">'
       +     '<a href="' + waFr + '" class="btn-add-cart lang-fr" target="_blank">Commander</a>'
       +     '<a href="' + waEn + '" class="btn-add-cart lang-en" target="_blank">Order</a>'
