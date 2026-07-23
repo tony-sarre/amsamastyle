@@ -35,26 +35,34 @@ const supabase = {
 // =============================================
 // CHARGER LES AVIS APPROUVÉS
 // =============================================
+var _reviews = [];
 async function loadReviews() {
   var grid = document.getElementById('reviewsGrid');
   if (!grid) return;
-  
   try {
-    var reviews = await supabase.select('reviews', 'approved=eq.true&order=created_at.desc&limit=12');
-    
-    if (reviews.length > 0) {
-      grid.innerHTML = reviews.map(function(r) {
-        return '<div class="review-card">' +
-          '<div class="review-stars">' + '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating) + '</div>' +
-          '<p class="review-text">"' + escapeHtml(r.message) + '"</p>' +
-          '<div class="review-author">' + escapeHtml(r.name) + '</div>' +
-          '<div class="review-location">' + escapeHtml(r.city || 'Canada') + '</div>' +
-        '</div>';
-      }).join('');
-    }
+    _reviews = await supabase.select('reviews', 'approved=eq.true&order=created_at.desc&limit=12');
+    renderReviews();
   } catch (e) {
     console.log('Erreur chargement avis:', e);
   }
+}
+
+function renderReviews() {
+  var grid = document.getElementById('reviewsGrid');
+  if (!grid || !_reviews.length) return;
+  var lang = currentLang();
+  grid.innerHTML = _reviews.map(function(r) {
+    // choisir la version selon la langue, avec repli
+    var txt;
+    if (lang === 'en') txt = r.message_en || r.message_fr || r.message;
+    else               txt = r.message_fr || r.message || r.message_en;
+    return '<div class="review-card">' +
+      '<div class="review-stars">' + '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating) + '</div>' +
+      '<p class="review-text">"' + escapeHtml(txt || '') + '"</p>' +
+      '<div class="review-author">' + escapeHtml(r.name) + '</div>' +
+      '<div class="review-location">' + escapeHtml(r.city || 'Canada') + '</div>' +
+    '</div>';
+  }).join('');
 }
 
 // =============================================
@@ -73,11 +81,15 @@ async function submitReview() {
     return;
   }
 
+  var lang = currentLang();
   var result = await supabase.insert('reviews', {
     name: name,
     city: city,
     rating: rating,
-    message: text
+    message: text,
+    lang: lang,
+    message_fr: lang === 'fr' ? text : null,
+    message_en: lang === 'en' ? text : null
   });
 
   if (result.ok) {
@@ -422,6 +434,7 @@ document.addEventListener('DOMContentLoaded', function () {
         applyContent();
         applyLangIn('#servicesGrid');
         applyLangIn('#trendsGrid');
+        renderReviews();
       }, 50);
     });
   });
