@@ -200,8 +200,13 @@ async function loadReviews(){
       <div class="meta">${dt(r.created_at)}</div>
       <div style="color:var(--gold-dark);letter-spacing:3px">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
       <strong>${esc(r.name)}</strong> <span class="meta">${esc(r.city||'')}</span>
-      <p>${esc(r.message||'')}</p>
+      <p style="font-style:italic;color:var(--terre)">Avis original : "${esc(r.message||'')}"</p>
+      <label>Version française</label>
+      <textarea id="rev-fr-${r.id}" rows="2">${esc(r.message_fr||r.message||'')}</textarea>
+      <label>Version anglaise (English)</label>
+      <textarea id="rev-en-${r.id}" rows="2">${esc(r.message_en||'')}</textarea>
       <div class="acts">
+        <button class="btn btn-sm" onclick="saveReviewTranslation('${r.id}')">💾 Enregistrer traductions</button>
         ${r.approved
           ?`<button class="btn btn-outline btn-sm" onclick="approve('${r.id}',false)">Masquer</button>`
           :`<button class="btn btn-ok btn-sm" onclick="approve('${r.id}',true)">Approuver</button>`}
@@ -209,6 +214,14 @@ async function loadReviews(){
       </div>
     </div>`).join('');
 }
+async function saveReviewTranslation(id){
+  const fr=document.getElementById('rev-fr-'+id).value.trim();
+  const en=document.getElementById('rev-en-'+id).value.trim();
+  const { error }=await sb.from('reviews').update({message_fr:fr, message_en:en}).eq('id',id);
+  if(error) return toast('Erreur : '+error.message,true);
+  toast('Traductions enregistrées ✅');
+}
+window.saveReviewTranslation=saveReviewTranslation;
 async function approve(id,val){await sb.from('reviews').update({approved:val}).eq('id',id);toast(val?'Avis publié':'Avis masqué');loadReviews();}
 window.approve=approve;
 
