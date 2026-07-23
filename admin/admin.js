@@ -262,7 +262,10 @@ async function loadServicesAdmin(){
     <div class="item">
       <div class="row2">
         <div><label>Icône</label><input value="${esc(s.icon||'')}" onchange="updSvc('${s.id}','icon',this.value)"></div>
-        <div><label>Prix</label><input value="${esc(s.price||'')}" onchange="updSvc('${s.id}','price',this.value)"></div>
+        <div><label>Prix FR</label><input value="${esc(s.price||'')}" onchange="updSvc('${s.id}','price',this.value)"></div>
+      </div>
+      <div class="row2">
+        <div><label>Prix EN</label><input value="${esc(s.price_en||'')}" onchange="updSvc('${s.id}','price_en',this.value)"></div>
       </div>
       <label>Titre FR</label><input value="${esc(s.title_fr||'')}" onchange="updSvc('${s.id}','title_fr',this.value)">
       <label>Titre EN</label><input value="${esc(s.title_en||'')}" onchange="updSvc('${s.id}','title_en',this.value)">
