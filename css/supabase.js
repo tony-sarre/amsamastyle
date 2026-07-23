@@ -382,7 +382,8 @@ async function loadServices() {
         +     '<span class="lang-en">' + escapeHtml(s.title_en || s.title_fr || '') + '</span></h3>'
         + '<p><span class="lang-fr">' + escapeHtml(s.desc_fr || '') + '</span>'
         +    '<span class="lang-en">' + escapeHtml(s.desc_en || s.desc_fr || '') + '</span></p>'
-        + '<div class="price">' + escapeHtml(s.price || '') + '</div>'
+        + '<div class="price"><span class="lang-fr">' + escapeHtml(s.price || '') + '</span>'
+        +   '<span class="lang-en">' + escapeHtml(s.price_en || s.price || '') + '</span></div>'
         + '</div>';
     }).join('');
     applyLangIn('#servicesGrid');
